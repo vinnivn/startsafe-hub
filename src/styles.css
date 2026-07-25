@@ -101,8 +101,8 @@
   font-weight: 600;
   box-shadow: var(--shadow-glow);
   transition: transform 0.2s, box-shadow 0.2s;
-}
-@utility btn-hero:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 60px oklch(0.72 0.19 155 / 0.4);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px oklch(0.72 0.19 155 / 0.4);
+  }
 }

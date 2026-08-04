@@ -14,6 +14,12 @@ import { Route as CollegeRouteImport } from './routes/college'
 import { Route as CentralRouteImport } from './routes/central'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudentIndexRouteImport } from './routes/student.index'
+import { Route as CollegeIndexRouteImport } from './routes/college.index'
+import { Route as CentralIndexRouteImport } from './routes/central.index'
+import { Route as StudentSplatRouteImport } from './routes/student.$'
+import { Route as CollegeSplatRouteImport } from './routes/college.$'
+import { Route as CentralSplatRouteImport } from './routes/central.$'
 import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-demo'
 
 const StudentRoute = StudentRouteImport.update({
@@ -41,6 +47,36 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRoute,
+} as any)
+const CollegeIndexRoute = CollegeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CollegeRoute,
+} as any)
+const CentralIndexRoute = CentralIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CentralRoute,
+} as any)
+const StudentSplatRoute = StudentSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => StudentRoute,
+} as any)
+const CollegeSplatRoute = CollegeSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => CollegeRoute,
+} as any)
+const CentralSplatRoute = CentralSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => CentralRoute,
+} as any)
 const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
   id: '/api/public/seed-demo',
   path: '/api/public/seed-demo',
@@ -50,26 +86,41 @@ const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/central': typeof CentralRoute
-  '/college': typeof CollegeRoute
-  '/student': typeof StudentRoute
+  '/central': typeof CentralRouteWithChildren
+  '/college': typeof CollegeRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/central/$': typeof CentralSplatRoute
+  '/college/$': typeof CollegeSplatRoute
+  '/student/$': typeof StudentSplatRoute
+  '/central/': typeof CentralIndexRoute
+  '/college/': typeof CollegeIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/central': typeof CentralRoute
-  '/college': typeof CollegeRoute
-  '/student': typeof StudentRoute
+  '/central/$': typeof CentralSplatRoute
+  '/college/$': typeof CollegeSplatRoute
+  '/student/$': typeof StudentSplatRoute
+  '/central': typeof CentralIndexRoute
+  '/college': typeof CollegeIndexRoute
+  '/student': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/central': typeof CentralRoute
-  '/college': typeof CollegeRoute
-  '/student': typeof StudentRoute
+  '/central': typeof CentralRouteWithChildren
+  '/college': typeof CollegeRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/central/$': typeof CentralSplatRoute
+  '/college/$': typeof CollegeSplatRoute
+  '/student/$': typeof StudentSplatRoute
+  '/central/': typeof CentralIndexRoute
+  '/college/': typeof CollegeIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
 }
 export interface FileRouteTypes {
@@ -80,11 +131,20 @@ export interface FileRouteTypes {
     | '/central'
     | '/college'
     | '/student'
+    | '/central/$'
+    | '/college/$'
+    | '/student/$'
+    | '/central/'
+    | '/college/'
+    | '/student/'
     | '/api/public/seed-demo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/central/$'
+    | '/college/$'
+    | '/student/$'
     | '/central'
     | '/college'
     | '/student'
@@ -96,15 +156,21 @@ export interface FileRouteTypes {
     | '/central'
     | '/college'
     | '/student'
+    | '/central/$'
+    | '/college/$'
+    | '/student/$'
+    | '/central/'
+    | '/college/'
+    | '/student/'
     | '/api/public/seed-demo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
-  CentralRoute: typeof CentralRoute
-  CollegeRoute: typeof CollegeRoute
-  StudentRoute: typeof StudentRoute
+  CentralRoute: typeof CentralRouteWithChildren
+  CollegeRoute: typeof CollegeRouteWithChildren
+  StudentRoute: typeof StudentRouteWithChildren
   ApiPublicSeedDemoRoute: typeof ApiPublicSeedDemoRoute
 }
 
@@ -145,6 +211,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/': {
+      id: '/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/college/': {
+      id: '/college/'
+      path: '/'
+      fullPath: '/college/'
+      preLoaderRoute: typeof CollegeIndexRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/central/': {
+      id: '/central/'
+      path: '/'
+      fullPath: '/central/'
+      preLoaderRoute: typeof CentralIndexRouteImport
+      parentRoute: typeof CentralRoute
+    }
+    '/student/$': {
+      id: '/student/$'
+      path: '/$'
+      fullPath: '/student/$'
+      preLoaderRoute: typeof StudentSplatRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/college/$': {
+      id: '/college/$'
+      path: '/$'
+      fullPath: '/college/$'
+      preLoaderRoute: typeof CollegeSplatRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/central/$': {
+      id: '/central/$'
+      path: '/$'
+      fullPath: '/central/$'
+      preLoaderRoute: typeof CentralSplatRouteImport
+      parentRoute: typeof CentralRoute
+    }
     '/api/public/seed-demo': {
       id: '/api/public/seed-demo'
       path: '/api/public/seed-demo'
@@ -155,24 +263,53 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CentralRouteChildren {
+  CentralSplatRoute: typeof CentralSplatRoute
+  CentralIndexRoute: typeof CentralIndexRoute
+}
+
+const CentralRouteChildren: CentralRouteChildren = {
+  CentralSplatRoute: CentralSplatRoute,
+  CentralIndexRoute: CentralIndexRoute,
+}
+
+const CentralRouteWithChildren =
+  CentralRoute._addFileChildren(CentralRouteChildren)
+
+interface CollegeRouteChildren {
+  CollegeSplatRoute: typeof CollegeSplatRoute
+  CollegeIndexRoute: typeof CollegeIndexRoute
+}
+
+const CollegeRouteChildren: CollegeRouteChildren = {
+  CollegeSplatRoute: CollegeSplatRoute,
+  CollegeIndexRoute: CollegeIndexRoute,
+}
+
+const CollegeRouteWithChildren =
+  CollegeRoute._addFileChildren(CollegeRouteChildren)
+
+interface StudentRouteChildren {
+  StudentSplatRoute: typeof StudentSplatRoute
+  StudentIndexRoute: typeof StudentIndexRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentSplatRoute: StudentSplatRoute,
+  StudentIndexRoute: StudentIndexRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
-  CentralRoute: CentralRoute,
-  CollegeRoute: CollegeRoute,
-  StudentRoute: StudentRoute,
+  CentralRoute: CentralRouteWithChildren,
+  CollegeRoute: CollegeRouteWithChildren,
+  StudentRoute: StudentRouteWithChildren,
   ApiPublicSeedDemoRoute: ApiPublicSeedDemoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

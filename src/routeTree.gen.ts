@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudentRouteImport } from './routes/student'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
@@ -16,6 +17,11 @@ import { Route as CollegeIndexRouteImport } from './routes/college.index'
 import { Route as CentralIndexRouteImport } from './routes/central.index'
 import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-demo'
 
+const StudentRoute = StudentRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -27,9 +33,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudentIndexRoute = StudentIndexRouteImport.update({
-  id: '/student/',
-  path: '/student/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRoute,
 } as any)
 const CollegeIndexRoute = CollegeIndexRouteImport.update({
   id: '/college/',
@@ -50,6 +56,7 @@ const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/student': typeof StudentRouteWithChildren
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -67,6 +74,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/student': typeof StudentRouteWithChildren
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -77,6 +85,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/student'
     | '/central/'
     | '/college/'
     | '/student/'
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/student'
     | '/central/'
     | '/college/'
     | '/student/'
@@ -102,14 +112,21 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  StudentRoute: typeof StudentRouteWithChildren
   CentralIndexRoute: typeof CentralIndexRoute
   CollegeIndexRoute: typeof CollegeIndexRoute
-  StudentIndexRoute: typeof StudentIndexRoute
   ApiPublicSeedDemoRoute: typeof ApiPublicSeedDemoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -126,10 +143,10 @@ declare module '@tanstack/react-router' {
     }
     '/student/': {
       id: '/student/'
-      path: '/student'
+      path: '/'
       fullPath: '/student/'
       preLoaderRoute: typeof StudentIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/college/': {
       id: '/college/'
@@ -155,12 +172,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface StudentRouteChildren {
+  StudentIndexRoute: typeof StudentIndexRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentIndexRoute: StudentIndexRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  StudentRoute: StudentRouteWithChildren,
   CentralIndexRoute: CentralIndexRoute,
   CollegeIndexRoute: CollegeIndexRoute,
-  StudentIndexRoute: StudentIndexRoute,
   ApiPublicSeedDemoRoute: ApiPublicSeedDemoRoute,
 }
 export const routeTree = rootRouteImport

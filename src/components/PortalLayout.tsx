@@ -81,7 +81,7 @@ export function PortalLayout({ role, nav }: { role: AppRole; nav: NavGroup[] }) 
                 {g.items.map((item) => (
                   <Link
                     key={item.to}
-                    to={item.to}
+                    to={item.to as "/"}
                     onClick={() => setOpen(false)}
                     activeOptions={{ exact: item.to === HOME[role] }}
                     activeProps={{ className: "bg-primary/10 text-primary border-primary/30" }}

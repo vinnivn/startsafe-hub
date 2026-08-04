@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { DashboardShell, StatCard } from "@/components/DashboardShell";
+import { StatCard } from "@/components/DashboardShell";
 import { usePlatformStats } from "@/lib/useStats";
 import { supabase } from "@/integrations/supabase/client";
 import { Users, Building2, Code2, Award, Briefcase, Lightbulb, Rocket, Brain, TrendingUp, Loader2, PlusCircle } from "lucide-react";
 
-export const Route = createFileRoute("/central")({
+export const Route = createFileRoute("/central/")({
   head: () => ({
     meta: [
       { title: "Central Intelligence · StartSafe" },
@@ -63,7 +63,7 @@ function Central() {
   ].filter(Boolean) as string[];
 
   return (
-    <DashboardShell role="central" nav={NAV}>
+    <>
       <section id="o">
         <h1 className="text-2xl md:text-3xl font-bold">Central Intelligence</h1>
         <p className="text-muted-foreground mt-1">The brain of StartSafe — every activity, everywhere, in real time.</p>
@@ -147,7 +147,7 @@ function Central() {
           </table>
         </div>
       </section>
-    </DashboardShell>
+    </>
   );
 }
 

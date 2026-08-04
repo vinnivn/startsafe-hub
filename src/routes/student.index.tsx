@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { DashboardShell, StatCard } from "@/components/DashboardShell";
+import { StatCard } from "@/components/DashboardShell";
 import { usePlatformStats } from "@/lib/useStats";
 import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,7 +24,7 @@ const TRACKS: { key: Track; label: string }[] = [
   { key: "core_engineering", label: "Core Engineering" },
 ];
 
-export const Route = createFileRoute("/student")({
+export const Route = createFileRoute("/student/")({
   head: () => ({
     meta: [
       { title: "Student Ecosystem · StartSafe" },
@@ -80,7 +80,7 @@ function StudentDashboard() {
   const readiness = Math.min(100, myMockTests * 8 + myProjects * 15 + myCerts * 10 + Math.floor(myMinutes / 30) * 2);
 
   return (
-    <DashboardShell role="student" nav={NAV}>
+    <>
       <section id="dashboard" className="space-y-6">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">Welcome back 👋</h1>
@@ -260,7 +260,7 @@ function StudentDashboard() {
           <StatCard label="Placements" value={stats.placements} icon={Briefcase} />
         </div>
       </section>
-    </DashboardShell>
+    </>
   );
 }
 

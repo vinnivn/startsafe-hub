@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { DashboardShell, StatCard } from "@/components/DashboardShell";
+import { StatCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Users, Code2, Award, Briefcase, Activity, BookOpen, AlertTriangle, TrendingUp, Building2 } from "lucide-react";
 
-export const Route = createFileRoute("/college")({
+export const Route = createFileRoute("/college/")({
   head: () => ({
     meta: [
       { title: "College Command Center · StartSafe" },
@@ -82,7 +82,7 @@ function CollegeDashboard() {
   const placementReady = Math.min(students.length, Math.floor((counts.projects + counts.certs) / 2));
 
   return (
-    <DashboardShell role="college" nav={NAV}>
+    <>
       <section id="dash">
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
           <Building2 className="h-4 w-4" /> {collegeName}
@@ -133,7 +133,7 @@ function CollegeDashboard() {
           </table>
         </div>
       </section>
-    </DashboardShell>
+    </>
   );
 }
 

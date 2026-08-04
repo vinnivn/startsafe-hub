@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StudentRouteImport } from './routes/student'
+import { Route as CollegeRouteImport } from './routes/college'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
@@ -20,6 +21,11 @@ import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-
 const StudentRoute = StudentRouteImport.update({
   id: '/student',
   path: '/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollegeRoute = CollegeRouteImport.update({
+  id: '/college',
+  path: '/college',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -38,9 +44,9 @@ const StudentIndexRoute = StudentIndexRouteImport.update({
   getParentRoute: () => StudentRoute,
 } as any)
 const CollegeIndexRoute = CollegeIndexRouteImport.update({
-  id: '/college/',
-  path: '/college/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => CollegeRoute,
 } as any)
 const CentralIndexRoute = CentralIndexRouteImport.update({
   id: '/central/',
@@ -56,6 +62,7 @@ const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/college': typeof CollegeRouteWithChildren
   '/student': typeof StudentRouteWithChildren
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/college': typeof CollegeRouteWithChildren
   '/student': typeof StudentRouteWithChildren
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
@@ -85,6 +93,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/college'
     | '/student'
     | '/central/'
     | '/college/'
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/college'
     | '/student'
     | '/central/'
     | '/college/'
@@ -112,9 +122,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  CollegeRoute: typeof CollegeRouteWithChildren
   StudentRoute: typeof StudentRouteWithChildren
   CentralIndexRoute: typeof CentralIndexRoute
-  CollegeIndexRoute: typeof CollegeIndexRoute
   ApiPublicSeedDemoRoute: typeof ApiPublicSeedDemoRoute
 }
 
@@ -125,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/student'
       fullPath: '/student'
       preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/college': {
+      id: '/college'
+      path: '/college'
+      fullPath: '/college'
+      preLoaderRoute: typeof CollegeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -150,10 +167,10 @@ declare module '@tanstack/react-router' {
     }
     '/college/': {
       id: '/college/'
-      path: '/college'
+      path: '/'
       fullPath: '/college/'
       preLoaderRoute: typeof CollegeIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof CollegeRoute
     }
     '/central/': {
       id: '/central/'
@@ -172,6 +189,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CollegeRouteChildren {
+  CollegeIndexRoute: typeof CollegeIndexRoute
+}
+
+const CollegeRouteChildren: CollegeRouteChildren = {
+  CollegeIndexRoute: CollegeIndexRoute,
+}
+
+const CollegeRouteWithChildren =
+  CollegeRoute._addFileChildren(CollegeRouteChildren)
+
 interface StudentRouteChildren {
   StudentIndexRoute: typeof StudentIndexRoute
 }
@@ -186,9 +214,9 @@ const StudentRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  CollegeRoute: CollegeRouteWithChildren,
   StudentRoute: StudentRouteWithChildren,
   CentralIndexRoute: CentralIndexRoute,
-  CollegeIndexRoute: CollegeIndexRoute,
   ApiPublicSeedDemoRoute: ApiPublicSeedDemoRoute,
 }
 export const routeTree = rootRouteImport

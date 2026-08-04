@@ -36,16 +36,6 @@ export const Route = createFileRoute("/student/")({
   component: StudentDashboard,
 });
 
-const NAV = [
-  { label: "Dashboard", href: "#dashboard" },
-  { label: "Learning Paths", href: "#learning" },
-  { label: "Mock Tests", href: "#mock" },
-  { label: "Projects Hub", href: "#projects" },
-  { label: "Certifications", href: "#certs" },
-  { label: "AI Mentor", href: "#mentor" },
-  { label: "Career Track", href: "#track" },
-];
-
 function StudentDashboard() {
   const { user } = useAuth();
   const { stats } = usePlatformStats();

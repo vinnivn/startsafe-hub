@@ -17,16 +17,6 @@ export const Route = createFileRoute("/college/")({
   component: CollegeDashboard,
 });
 
-const NAV = [
-  { label: "Dashboard", href: "#dash" },
-  { label: "Student Management", href: "#students" },
-  { label: "Learning Analytics", href: "#learning" },
-  { label: "Coding Analytics", href: "#coding" },
-  { label: "Placement Analytics", href: "#placements" },
-  { label: "AI Insights", href: "#insights" },
-  { label: "Alerts", href: "#alerts" },
-];
-
 interface Row { id: string; full_name: string; email: string; }
 
 function CollegeDashboard() {

@@ -17,16 +17,6 @@ export const Route = createFileRoute("/central/")({
   component: Central,
 });
 
-const NAV = [
-  { label: "Overview", href: "#o" },
-  { label: "Students", href: "#o" },
-  { label: "Colleges", href: "#colleges" },
-  { label: "Companies", href: "#companies" },
-  { label: "Deployments", href: "#deploy" },
-  { label: "AI Insights", href: "#ai" },
-  { label: "Recommendations", href: "#recs" },
-];
-
 function Central() {
   const { stats } = usePlatformStats();
   const [colleges, setColleges] = useState<{ id: string; name: string; location: string | null }[]>([]);

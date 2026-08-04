@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as CollegeIndexRouteImport } from './routes/college.index'
 import { Route as CentralIndexRouteImport } from './routes/central.index'
+import { Route as StudentSplatRouteImport } from './routes/student.$'
 import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-demo'
 
 const StudentRoute = StudentRouteImport.update({
@@ -59,6 +60,11 @@ const CentralIndexRoute = CentralIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CentralRoute,
 } as any)
+const StudentSplatRoute = StudentSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => StudentRoute,
+} as any)
 const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
   id: '/api/public/seed-demo',
   path: '/api/public/seed-demo',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/central': typeof CentralRouteWithChildren
   '/college': typeof CollegeRouteWithChildren
   '/student': typeof StudentRouteWithChildren
+  '/student/$': typeof StudentSplatRoute
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/student/$': typeof StudentSplatRoute
   '/central': typeof CentralIndexRoute
   '/college': typeof CollegeIndexRoute
   '/student': typeof StudentIndexRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/central': typeof CentralRouteWithChildren
   '/college': typeof CollegeRouteWithChildren
   '/student': typeof StudentRouteWithChildren
+  '/student/$': typeof StudentSplatRoute
   '/central/': typeof CentralIndexRoute
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/central'
     | '/college'
     | '/student'
+    | '/student/$'
     | '/central/'
     | '/college/'
     | '/student/'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/student/$'
     | '/central'
     | '/college'
     | '/student'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/central'
     | '/college'
     | '/student'
+    | '/student/$'
     | '/central/'
     | '/college/'
     | '/student/'
@@ -196,6 +208,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CentralIndexRouteImport
       parentRoute: typeof CentralRoute
     }
+    '/student/$': {
+      id: '/student/$'
+      path: '/$'
+      fullPath: '/student/$'
+      preLoaderRoute: typeof StudentSplatRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/api/public/seed-demo': {
       id: '/api/public/seed-demo'
       path: '/api/public/seed-demo'
@@ -229,10 +248,12 @@ const CollegeRouteWithChildren =
   CollegeRoute._addFileChildren(CollegeRouteChildren)
 
 interface StudentRouteChildren {
+  StudentSplatRoute: typeof StudentSplatRoute
   StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
+  StudentSplatRoute: StudentSplatRoute,
   StudentIndexRoute: StudentIndexRoute,
 }
 

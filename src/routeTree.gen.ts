@@ -20,6 +20,7 @@ import { Route as CentralIndexRouteImport } from './routes/central.index'
 import { Route as StudentSplatRouteImport } from './routes/student.$'
 import { Route as CollegeSplatRouteImport } from './routes/college.$'
 import { Route as CentralSplatRouteImport } from './routes/central.$'
+import { Route as CentralEcosystemCollegesRouteImport } from './routes/central.ecosystem.colleges'
 import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-demo'
 
 const StudentRoute = StudentRouteImport.update({
@@ -77,6 +78,12 @@ const CentralSplatRoute = CentralSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => CentralRoute,
 } as any)
+const CentralEcosystemCollegesRoute =
+  CentralEcosystemCollegesRouteImport.update({
+    id: '/ecosystem/colleges',
+    path: '/ecosystem/colleges',
+    getParentRoute: () => CentralRoute,
+  } as any)
 const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
   id: '/api/public/seed-demo',
   path: '/api/public/seed-demo',
@@ -96,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
   '/college': typeof CollegeIndexRoute
   '/student': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +131,7 @@ export interface FileRoutesById {
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/college/'
     | '/student/'
     | '/api/public/seed-demo'
+    | '/central/ecosystem/colleges'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/college'
     | '/student'
     | '/api/public/seed-demo'
+    | '/central/ecosystem/colleges'
   id:
     | '__root__'
     | '/'
@@ -163,6 +175,7 @@ export interface FileRouteTypes {
     | '/college/'
     | '/student/'
     | '/api/public/seed-demo'
+    | '/central/ecosystem/colleges'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CentralSplatRouteImport
       parentRoute: typeof CentralRoute
     }
+    '/central/ecosystem/colleges': {
+      id: '/central/ecosystem/colleges'
+      path: '/ecosystem/colleges'
+      fullPath: '/central/ecosystem/colleges'
+      preLoaderRoute: typeof CentralEcosystemCollegesRouteImport
+      parentRoute: typeof CentralRoute
+    }
     '/api/public/seed-demo': {
       id: '/api/public/seed-demo'
       path: '/api/public/seed-demo'
@@ -266,11 +286,13 @@ declare module '@tanstack/react-router' {
 interface CentralRouteChildren {
   CentralSplatRoute: typeof CentralSplatRoute
   CentralIndexRoute: typeof CentralIndexRoute
+  CentralEcosystemCollegesRoute: typeof CentralEcosystemCollegesRoute
 }
 
 const CentralRouteChildren: CentralRouteChildren = {
   CentralSplatRoute: CentralSplatRoute,
   CentralIndexRoute: CentralIndexRoute,
+  CentralEcosystemCollegesRoute: CentralEcosystemCollegesRoute,
 }
 
 const CentralRouteWithChildren =
@@ -313,13 +335,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

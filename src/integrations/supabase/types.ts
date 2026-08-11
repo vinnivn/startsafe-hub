@@ -43,22 +43,46 @@ export type Database = {
       }
       colleges: {
         Row: {
+          college_code: string | null
+          courses: string[]
           created_at: string
           id: string
+          is_archived: boolean
           location: string | null
           name: string
+          placement_officer_email: string | null
+          placement_officer_name: string | null
+          placement_officer_phone: string | null
+          status: string
+          updated_at: string
         }
         Insert: {
+          college_code?: string | null
+          courses?: string[]
           created_at?: string
           id?: string
+          is_archived?: boolean
           location?: string | null
           name: string
+          placement_officer_email?: string | null
+          placement_officer_name?: string | null
+          placement_officer_phone?: string | null
+          status?: string
+          updated_at?: string
         }
         Update: {
+          college_code?: string | null
+          courses?: string[]
           created_at?: string
           id?: string
+          is_archived?: boolean
           location?: string | null
           name?: string
+          placement_officer_email?: string | null
+          placement_officer_name?: string | null
+          placement_officer_phone?: string | null
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -82,6 +106,30 @@ export type Database = {
           id?: string
           industry?: string | null
           is_hiring?: boolean
+          name?: string
+        }
+        Relationships: []
+      }
+      courses: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
           name?: string
         }
         Relationships: []
@@ -113,6 +161,45 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_paths: {
+        Row: {
+          course_code: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          duration_weeks: number
+          id: string
+          is_archived: boolean
+          is_published: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration_weeks?: number
+          id?: string
+          is_archived?: boolean
+          is_published?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration_weeks?: number
+          id?: string
+          is_archived?: boolean
+          is_published?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       learning_sessions: {
         Row: {
           created_at: string
@@ -136,6 +223,110 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      mock_test_definitions: {
+        Row: {
+          created_at: string
+          description: string | null
+          difficulty: string
+          duration_minutes: number
+          end_date: string | null
+          id: string
+          instructions: string | null
+          is_archived: boolean
+          is_published: boolean
+          max_attempts: number
+          max_violations: number
+          passing_marks: number
+          start_date: string | null
+          target_course: string | null
+          target_semester: number | null
+          title: string
+          total_marks: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          duration_minutes?: number
+          end_date?: string | null
+          id?: string
+          instructions?: string | null
+          is_archived?: boolean
+          is_published?: boolean
+          max_attempts?: number
+          max_violations?: number
+          passing_marks?: number
+          start_date?: string | null
+          target_course?: string | null
+          target_semester?: number | null
+          title: string
+          total_marks?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          duration_minutes?: number
+          end_date?: string | null
+          id?: string
+          instructions?: string | null
+          is_archived?: boolean
+          is_published?: boolean
+          max_attempts?: number
+          max_violations?: number
+          passing_marks?: number
+          start_date?: string | null
+          target_course?: string | null
+          target_semester?: number | null
+          title?: string
+          total_marks?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mock_test_questions: {
+        Row: {
+          correct_index: number
+          created_at: string
+          id: string
+          marks: number
+          options: Json
+          position: number
+          question: string
+          test_id: string
+        }
+        Insert: {
+          correct_index?: number
+          created_at?: string
+          id?: string
+          marks?: number
+          options?: Json
+          position?: number
+          question: string
+          test_id: string
+        }
+        Update: {
+          correct_index?: number
+          created_at?: string
+          id?: string
+          marks?: number
+          options?: Json
+          position?: number
+          question?: string
+          test_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mock_test_questions_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "mock_test_definitions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       mock_tests: {
         Row: {
@@ -163,6 +354,86 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      path_assignments: {
+        Row: {
+          college_id: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          path_id: string
+          student_id: string | null
+        }
+        Insert: {
+          college_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          path_id: string
+          student_id?: string | null
+        }
+        Update: {
+          college_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          path_id?: string
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "path_assignments_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "path_assignments_path_id_fkey"
+            columns: ["path_id"]
+            isOneToOne: false
+            referencedRelation: "learning_paths"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      path_weeks: {
+        Row: {
+          created_at: string
+          id: string
+          is_archived: boolean
+          objectives: string | null
+          path_id: string
+          title: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          objectives?: string | null
+          path_id: string
+          title: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          objectives?: string | null
+          path_id?: string
+          title?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "path_weeks_path_id_fkey"
+            columns: ["path_id"]
+            isOneToOne: false
+            referencedRelation: "learning_paths"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pilot_deployments: {
         Row: {
@@ -239,31 +510,49 @@ export type Database = {
           avatar_url: string | null
           career_track: Database["public"]["Enums"]["career_track"] | null
           college_id: string | null
+          course: string | null
           created_at: string
+          department: string | null
           email: string
           full_name: string
           github_username: string | null
           id: string
+          is_archived: boolean
+          roll_number: string | null
+          section: string | null
+          semester: number | null
         }
         Insert: {
           avatar_url?: string | null
           career_track?: Database["public"]["Enums"]["career_track"] | null
           college_id?: string | null
+          course?: string | null
           created_at?: string
+          department?: string | null
           email: string
           full_name: string
           github_username?: string | null
           id: string
+          is_archived?: boolean
+          roll_number?: string | null
+          section?: string | null
+          semester?: number | null
         }
         Update: {
           avatar_url?: string | null
           career_track?: Database["public"]["Enums"]["career_track"] | null
           college_id?: string | null
+          course?: string | null
           created_at?: string
+          department?: string | null
           email?: string
           full_name?: string
           github_username?: string | null
           id?: string
+          is_archived?: boolean
+          roll_number?: string | null
+          section?: string | null
+          semester?: number | null
         }
         Relationships: [
           {
@@ -278,33 +567,51 @@ export type Database = {
       projects: {
         Row: {
           created_at: string
+          deadline: string | null
           demo_url: string | null
           description: string | null
           github_url: string | null
           id: string
+          is_archived: boolean
+          objectives: string | null
           project_type: Database["public"]["Enums"]["project_type"]
+          review_notes: string | null
+          score: number | null
+          status: string
           tech_stack: string[] | null
           title: string
           user_id: string
         }
         Insert: {
           created_at?: string
+          deadline?: string | null
           demo_url?: string | null
           description?: string | null
           github_url?: string | null
           id?: string
+          is_archived?: boolean
+          objectives?: string | null
           project_type?: Database["public"]["Enums"]["project_type"]
+          review_notes?: string | null
+          score?: number | null
+          status?: string
           tech_stack?: string[] | null
           title: string
           user_id: string
         }
         Update: {
           created_at?: string
+          deadline?: string | null
           demo_url?: string | null
           description?: string | null
           github_url?: string | null
           id?: string
+          is_archived?: boolean
+          objectives?: string | null
           project_type?: Database["public"]["Enums"]["project_type"]
+          review_notes?: string | null
+          score?: number | null
+          status?: string
           tech_stack?: string[] | null
           title?: string
           user_id?: string
@@ -335,6 +642,165 @@ export type Database = {
         }
         Relationships: []
       }
+      student_progress: {
+        Row: {
+          content_id: string | null
+          created_at: string
+          id: string
+          path_id: string | null
+          status: string
+          user_id: string
+          week_id: string | null
+        }
+        Insert: {
+          content_id?: string | null
+          created_at?: string
+          id?: string
+          path_id?: string | null
+          status?: string
+          user_id: string
+          week_id?: string | null
+        }
+        Update: {
+          content_id?: string | null
+          created_at?: string
+          id?: string
+          path_id?: string | null
+          status?: string
+          user_id?: string
+          week_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "week_content"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_progress_path_id_fkey"
+            columns: ["path_id"]
+            isOneToOne: false
+            referencedRelation: "learning_paths"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_progress_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "path_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_assignments: {
+        Row: {
+          college_id: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          test_id: string
+        }
+        Insert: {
+          college_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          test_id: string
+        }
+        Update: {
+          college_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          test_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_assignments_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "test_assignments_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "mock_test_definitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_attempts: {
+        Row: {
+          answers: Json
+          attempt_number: number
+          correct_count: number
+          created_at: string
+          duration_seconds: number | null
+          fullscreen_exit_count: number
+          id: string
+          incorrect_count: number
+          score: number
+          skipped_count: number
+          started_at: string
+          status: string
+          submitted_at: string | null
+          tab_switch_count: number
+          test_id: string
+          total: number
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          attempt_number?: number
+          correct_count?: number
+          created_at?: string
+          duration_seconds?: number | null
+          fullscreen_exit_count?: number
+          id?: string
+          incorrect_count?: number
+          score?: number
+          skipped_count?: number
+          started_at?: string
+          status?: string
+          submitted_at?: string | null
+          tab_switch_count?: number
+          test_id: string
+          total?: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          attempt_number?: number
+          correct_count?: number
+          created_at?: string
+          duration_seconds?: number | null
+          fullscreen_exit_count?: number
+          id?: string
+          incorrect_count?: number
+          score?: number
+          skipped_count?: number
+          started_at?: string
+          status?: string
+          submitted_at?: string | null
+          tab_switch_count?: number
+          test_id?: string
+          total?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempts_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "mock_test_definitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           college_id: string | null
@@ -364,11 +830,65 @@ export type Database = {
           },
         ]
       }
+      week_content: {
+        Row: {
+          body: string | null
+          content_type: string
+          correct_answer: string | null
+          created_at: string
+          id: string
+          is_archived: boolean
+          options: Json | null
+          position: number
+          title: string
+          url: string | null
+          week_id: string
+        }
+        Insert: {
+          body?: string | null
+          content_type: string
+          correct_answer?: string | null
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          options?: Json | null
+          position?: number
+          title: string
+          url?: string | null
+          week_id: string
+        }
+        Update: {
+          body?: string | null
+          content_type?: string
+          correct_answer?: string | null
+          created_at?: string
+          id?: string
+          is_archived?: boolean
+          options?: Json | null
+          position?: number
+          title?: string
+          url?: string | null
+          week_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "week_content_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "path_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      gen_college_code: {
+        Args: { _location: string; _name: string }
+        Returns: string
+      }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

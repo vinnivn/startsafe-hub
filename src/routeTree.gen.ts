@@ -20,6 +20,14 @@ import { Route as CentralIndexRouteImport } from './routes/central.index'
 import { Route as StudentSplatRouteImport } from './routes/student.$'
 import { Route as CollegeSplatRouteImport } from './routes/college.$'
 import { Route as CentralSplatRouteImport } from './routes/central.$'
+import { Route as StudentProjectsProjectIdRouteImport } from './routes/student.projects.$projectId'
+import { Route as CollegeStudentsStudentIdRouteImport } from './routes/college.students.$studentId'
+import { Route as CollegeProjectsProjectIdRouteImport } from './routes/college.projects.$projectId'
+import { Route as CollegeCollegesCollegeIdRouteImport } from './routes/college.colleges.$collegeId'
+import { Route as CentralStudentsStudentIdRouteImport } from './routes/central.students.$studentId'
+import { Route as CentralProjectsProjectIdRouteImport } from './routes/central.projects.$projectId'
+import { Route as CentralEcosystemCollegesRouteImport } from './routes/central.ecosystem.colleges'
+import { Route as CentralCollegesCollegeIdRouteImport } from './routes/central.colleges.$collegeId'
 import { Route as ApiPublicSeedDemoRouteImport } from './routes/api/public/seed-demo'
 
 const StudentRoute = StudentRouteImport.update({
@@ -77,6 +85,54 @@ const CentralSplatRoute = CentralSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => CentralRoute,
 } as any)
+const StudentProjectsProjectIdRoute =
+  StudentProjectsProjectIdRouteImport.update({
+    id: '/projects/$projectId',
+    path: '/projects/$projectId',
+    getParentRoute: () => StudentRoute,
+  } as any)
+const CollegeStudentsStudentIdRoute =
+  CollegeStudentsStudentIdRouteImport.update({
+    id: '/students/$studentId',
+    path: '/students/$studentId',
+    getParentRoute: () => CollegeRoute,
+  } as any)
+const CollegeProjectsProjectIdRoute =
+  CollegeProjectsProjectIdRouteImport.update({
+    id: '/projects/$projectId',
+    path: '/projects/$projectId',
+    getParentRoute: () => CollegeRoute,
+  } as any)
+const CollegeCollegesCollegeIdRoute =
+  CollegeCollegesCollegeIdRouteImport.update({
+    id: '/colleges/$collegeId',
+    path: '/colleges/$collegeId',
+    getParentRoute: () => CollegeRoute,
+  } as any)
+const CentralStudentsStudentIdRoute =
+  CentralStudentsStudentIdRouteImport.update({
+    id: '/students/$studentId',
+    path: '/students/$studentId',
+    getParentRoute: () => CentralRoute,
+  } as any)
+const CentralProjectsProjectIdRoute =
+  CentralProjectsProjectIdRouteImport.update({
+    id: '/projects/$projectId',
+    path: '/projects/$projectId',
+    getParentRoute: () => CentralRoute,
+  } as any)
+const CentralEcosystemCollegesRoute =
+  CentralEcosystemCollegesRouteImport.update({
+    id: '/ecosystem/colleges',
+    path: '/ecosystem/colleges',
+    getParentRoute: () => CentralRoute,
+  } as any)
+const CentralCollegesCollegeIdRoute =
+  CentralCollegesCollegeIdRouteImport.update({
+    id: '/colleges/$collegeId',
+    path: '/colleges/$collegeId',
+    getParentRoute: () => CentralRoute,
+  } as any)
 const ApiPublicSeedDemoRoute = ApiPublicSeedDemoRouteImport.update({
   id: '/api/public/seed-demo',
   path: '/api/public/seed-demo',
@@ -96,6 +152,14 @@ export interface FileRoutesByFullPath {
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/colleges/$collegeId': typeof CentralCollegesCollegeIdRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
+  '/central/projects/$projectId': typeof CentralProjectsProjectIdRoute
+  '/central/students/$studentId': typeof CentralStudentsStudentIdRoute
+  '/college/colleges/$collegeId': typeof CollegeCollegesCollegeIdRoute
+  '/college/projects/$projectId': typeof CollegeProjectsProjectIdRoute
+  '/college/students/$studentId': typeof CollegeStudentsStudentIdRoute
+  '/student/projects/$projectId': typeof StudentProjectsProjectIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +171,14 @@ export interface FileRoutesByTo {
   '/college': typeof CollegeIndexRoute
   '/student': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/colleges/$collegeId': typeof CentralCollegesCollegeIdRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
+  '/central/projects/$projectId': typeof CentralProjectsProjectIdRoute
+  '/central/students/$studentId': typeof CentralStudentsStudentIdRoute
+  '/college/colleges/$collegeId': typeof CollegeCollegesCollegeIdRoute
+  '/college/projects/$projectId': typeof CollegeProjectsProjectIdRoute
+  '/college/students/$studentId': typeof CollegeStudentsStudentIdRoute
+  '/student/projects/$projectId': typeof StudentProjectsProjectIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +194,14 @@ export interface FileRoutesById {
   '/college/': typeof CollegeIndexRoute
   '/student/': typeof StudentIndexRoute
   '/api/public/seed-demo': typeof ApiPublicSeedDemoRoute
+  '/central/colleges/$collegeId': typeof CentralCollegesCollegeIdRoute
+  '/central/ecosystem/colleges': typeof CentralEcosystemCollegesRoute
+  '/central/projects/$projectId': typeof CentralProjectsProjectIdRoute
+  '/central/students/$studentId': typeof CentralStudentsStudentIdRoute
+  '/college/colleges/$collegeId': typeof CollegeCollegesCollegeIdRoute
+  '/college/projects/$projectId': typeof CollegeProjectsProjectIdRoute
+  '/college/students/$studentId': typeof CollegeStudentsStudentIdRoute
+  '/student/projects/$projectId': typeof StudentProjectsProjectIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -138,6 +218,14 @@ export interface FileRouteTypes {
     | '/college/'
     | '/student/'
     | '/api/public/seed-demo'
+    | '/central/colleges/$collegeId'
+    | '/central/ecosystem/colleges'
+    | '/central/projects/$projectId'
+    | '/central/students/$studentId'
+    | '/college/colleges/$collegeId'
+    | '/college/projects/$projectId'
+    | '/college/students/$studentId'
+    | '/student/projects/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,6 +237,14 @@ export interface FileRouteTypes {
     | '/college'
     | '/student'
     | '/api/public/seed-demo'
+    | '/central/colleges/$collegeId'
+    | '/central/ecosystem/colleges'
+    | '/central/projects/$projectId'
+    | '/central/students/$studentId'
+    | '/college/colleges/$collegeId'
+    | '/college/projects/$projectId'
+    | '/college/students/$studentId'
+    | '/student/projects/$projectId'
   id:
     | '__root__'
     | '/'
@@ -163,6 +259,14 @@ export interface FileRouteTypes {
     | '/college/'
     | '/student/'
     | '/api/public/seed-demo'
+    | '/central/colleges/$collegeId'
+    | '/central/ecosystem/colleges'
+    | '/central/projects/$projectId'
+    | '/central/students/$studentId'
+    | '/college/colleges/$collegeId'
+    | '/college/projects/$projectId'
+    | '/college/students/$studentId'
+    | '/student/projects/$projectId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -253,6 +357,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CentralSplatRouteImport
       parentRoute: typeof CentralRoute
     }
+    '/student/projects/$projectId': {
+      id: '/student/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/student/projects/$projectId'
+      preLoaderRoute: typeof StudentProjectsProjectIdRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/college/students/$studentId': {
+      id: '/college/students/$studentId'
+      path: '/students/$studentId'
+      fullPath: '/college/students/$studentId'
+      preLoaderRoute: typeof CollegeStudentsStudentIdRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/college/projects/$projectId': {
+      id: '/college/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/college/projects/$projectId'
+      preLoaderRoute: typeof CollegeProjectsProjectIdRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/college/colleges/$collegeId': {
+      id: '/college/colleges/$collegeId'
+      path: '/colleges/$collegeId'
+      fullPath: '/college/colleges/$collegeId'
+      preLoaderRoute: typeof CollegeCollegesCollegeIdRouteImport
+      parentRoute: typeof CollegeRoute
+    }
+    '/central/students/$studentId': {
+      id: '/central/students/$studentId'
+      path: '/students/$studentId'
+      fullPath: '/central/students/$studentId'
+      preLoaderRoute: typeof CentralStudentsStudentIdRouteImport
+      parentRoute: typeof CentralRoute
+    }
+    '/central/projects/$projectId': {
+      id: '/central/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/central/projects/$projectId'
+      preLoaderRoute: typeof CentralProjectsProjectIdRouteImport
+      parentRoute: typeof CentralRoute
+    }
+    '/central/ecosystem/colleges': {
+      id: '/central/ecosystem/colleges'
+      path: '/ecosystem/colleges'
+      fullPath: '/central/ecosystem/colleges'
+      preLoaderRoute: typeof CentralEcosystemCollegesRouteImport
+      parentRoute: typeof CentralRoute
+    }
+    '/central/colleges/$collegeId': {
+      id: '/central/colleges/$collegeId'
+      path: '/colleges/$collegeId'
+      fullPath: '/central/colleges/$collegeId'
+      preLoaderRoute: typeof CentralCollegesCollegeIdRouteImport
+      parentRoute: typeof CentralRoute
+    }
     '/api/public/seed-demo': {
       id: '/api/public/seed-demo'
       path: '/api/public/seed-demo'
@@ -266,11 +426,19 @@ declare module '@tanstack/react-router' {
 interface CentralRouteChildren {
   CentralSplatRoute: typeof CentralSplatRoute
   CentralIndexRoute: typeof CentralIndexRoute
+  CentralCollegesCollegeIdRoute: typeof CentralCollegesCollegeIdRoute
+  CentralEcosystemCollegesRoute: typeof CentralEcosystemCollegesRoute
+  CentralProjectsProjectIdRoute: typeof CentralProjectsProjectIdRoute
+  CentralStudentsStudentIdRoute: typeof CentralStudentsStudentIdRoute
 }
 
 const CentralRouteChildren: CentralRouteChildren = {
   CentralSplatRoute: CentralSplatRoute,
   CentralIndexRoute: CentralIndexRoute,
+  CentralCollegesCollegeIdRoute: CentralCollegesCollegeIdRoute,
+  CentralEcosystemCollegesRoute: CentralEcosystemCollegesRoute,
+  CentralProjectsProjectIdRoute: CentralProjectsProjectIdRoute,
+  CentralStudentsStudentIdRoute: CentralStudentsStudentIdRoute,
 }
 
 const CentralRouteWithChildren =
@@ -279,11 +447,17 @@ const CentralRouteWithChildren =
 interface CollegeRouteChildren {
   CollegeSplatRoute: typeof CollegeSplatRoute
   CollegeIndexRoute: typeof CollegeIndexRoute
+  CollegeCollegesCollegeIdRoute: typeof CollegeCollegesCollegeIdRoute
+  CollegeProjectsProjectIdRoute: typeof CollegeProjectsProjectIdRoute
+  CollegeStudentsStudentIdRoute: typeof CollegeStudentsStudentIdRoute
 }
 
 const CollegeRouteChildren: CollegeRouteChildren = {
   CollegeSplatRoute: CollegeSplatRoute,
   CollegeIndexRoute: CollegeIndexRoute,
+  CollegeCollegesCollegeIdRoute: CollegeCollegesCollegeIdRoute,
+  CollegeProjectsProjectIdRoute: CollegeProjectsProjectIdRoute,
+  CollegeStudentsStudentIdRoute: CollegeStudentsStudentIdRoute,
 }
 
 const CollegeRouteWithChildren =
@@ -292,11 +466,13 @@ const CollegeRouteWithChildren =
 interface StudentRouteChildren {
   StudentSplatRoute: typeof StudentSplatRoute
   StudentIndexRoute: typeof StudentIndexRoute
+  StudentProjectsProjectIdRoute: typeof StudentProjectsProjectIdRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
   StudentSplatRoute: StudentSplatRoute,
   StudentIndexRoute: StudentIndexRoute,
+  StudentProjectsProjectIdRoute: StudentProjectsProjectIdRoute,
 }
 
 const StudentRouteWithChildren =
